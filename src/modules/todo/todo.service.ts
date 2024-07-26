@@ -55,7 +55,7 @@ export class TodoService {
   ): Promise<CreateTodoResponseRemote> {
     const a = await this.todoRepository.update(
       {
-        // text: dto.text,
+        text: dto.text,
         isChecked: dto.isChecked,
       },
       {

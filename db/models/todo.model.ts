@@ -26,13 +26,13 @@ export class Todo extends Model {
   isChecked: boolean;
 
   @Column({
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: false,
   })
   createdAt?: any;
 
   @Column({
-    type: DataType.TIME,
+    type: DataType.DATE,
     allowNull: false,
   })
   updatedAt?: any;

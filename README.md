@@ -8,7 +8,11 @@ $ npm install
 ```bash
 $ set -a && source .env && set +a
 
+# create table Todos
 $ npx sequelize-cli db:migrate
+
+# drop table Todos
+$ npx sequelize-cli db:migrate:undo
 ```
 
 ## Running the app

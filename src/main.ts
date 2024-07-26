@@ -10,6 +10,7 @@ async function bootstrap() {
       whitelist: true,
     }),
   );
+  app.enableCors();
   await app.listen(8080);
 }
 bootstrap();
