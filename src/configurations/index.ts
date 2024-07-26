@@ -1,4 +1,5 @@
 export default () => ({
+  db_dialect: process.env.DB_DIALECT,
   db_host: process.env.DB_HOST,
   db_port: process.env.DB_PORT,
   db_name: process.env.DB_NAME,

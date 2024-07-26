@@ -9,17 +9,9 @@ import {
 } from 'sequelize-typescript';
 
 @Table({
-  tableName: 'todos',
+  tableName: 'Todos',
 })
 export class Todo extends Model {
-  @PrimaryKey
-  @AutoIncrement
-  @Column({
-    type: DataType.BIGINT,
-    allowNull: false,
-  })
-  id: number;
-
   @Column({
     type: DataType.STRING,
     allowNull: false,
@@ -32,4 +24,16 @@ export class Todo extends Model {
     allowNull: false,
   })
   isChecked: boolean;
+
+  @Column({
+    type: DataType.TIME,
+    allowNull: false,
+  })
+  createdAt?: any;
+
+  @Column({
+    type: DataType.TIME,
+    allowNull: false,
+  })
+  updatedAt?: any;
 }

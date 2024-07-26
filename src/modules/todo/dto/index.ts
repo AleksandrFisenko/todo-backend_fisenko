@@ -11,6 +11,9 @@ export class CreateTodoResponseRemote {
 }
 
 export class UpdateStatusTodoReceiveRemote {
+  // @IsString()
+  // text: string;
+
   @IsBoolean()
   isChecked: boolean;
 }

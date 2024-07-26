@@ -3,16 +3,17 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   Param,
   Post,
   Put,
   Query,
-  Res,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import { Response } from 'express';
-import { CreateTodoReceiveRemote, CreateTodoResponseRemote, UpdateStatusTodoReceiveRemote } from './dto';
+import {
+  CreateTodoReceiveRemote,
+  CreateTodoResponseRemote,
+  UpdateStatusTodoReceiveRemote,
+} from './dto';
 import { Todo } from 'db/models/todo.model';
 
 @Controller('todos')
@@ -32,7 +33,10 @@ export class TodoController {
   }
 
   @Delete(':id')
-  deleteTask(@Param('id') id: number): Promise<CreateTodoResponseRemote> {
+  // eslint-disable-next-line prettier/prettier
+  deleteTask(
+    @Param('id') id: number,
+  ): Promise<CreateTodoResponseRemote> {
     return this.todoService.deleteTask(id);
   }
 

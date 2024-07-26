@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TodoModule } from '../todo/todo.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import configurations from '../configurations';
+import configurations from 'src/configurations';
 import { Todo } from 'db/models/todo.model';
 
 @Module({
@@ -17,7 +17,7 @@ import { Todo } from 'db/models/todo.model';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        dialect: 'postgres',
+        dialect: configService.get('db_dialect'),
         host: configService.get('db_host'),
         port: Number(configService.get('db_port')),
         username: configService.get('db_user'),
