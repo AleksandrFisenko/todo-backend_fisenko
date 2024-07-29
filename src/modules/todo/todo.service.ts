@@ -20,9 +20,10 @@ export class TodoService {
   }
 
   async createTask(dto: CreateTodoDTO): Promise<ResponceDTO> {
-    await this.todoRepository.create({
+    const a = await this.todoRepository.create({
       text: dto.text,
     });
+    console.log(a);
     return this.resultOk;
   }
 

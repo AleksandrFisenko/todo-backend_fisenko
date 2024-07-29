@@ -2,34 +2,38 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface, Sequelize) {
-    return await queryInterface.createTable('Todos', {
+  up(queryInterface, Sequelize) {
+    return queryInterface.createTable('Todos', {
       id: {
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
       },
       text: {
         allowNull: false,
-        type: Sequelize.DataTypes.STRING,
+        type: Sequelize.STRING,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
       },
       isChecked: {
         allowNull: false,
-        type: Sequelize.DataTypes.BOOLEAN,
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.TIME,
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DataTypes.TIME,
+        type: Sequelize.DATE,
       },
     });
   },
 
-  async down(queryInterface) {
-    return await queryInterface.dropTable('Todos');
+  down(queryInterface) {
+    return queryInterface.dropTable('Todos');
   },
 };

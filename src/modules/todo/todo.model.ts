@@ -5,14 +5,16 @@ import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
 })
 export class Todo extends Model {
   @Column({
-    type: DataType.STRING,
     allowNull: false,
+    // validate: {
+    //   notNull: true,
+    //   notEmpty: true,
+    // },
   })
   text: string;
 
   @Default(false)
   @Column({
-    type: DataType.BOOLEAN,
     allowNull: false,
   })
   isChecked: boolean;
