@@ -9,12 +9,10 @@ import {
   Query,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
-import {
-  CreateTodoReceiveRemote,
-  CreateTodoResponseRemote,
-  UpdateStatusTodoReceiveRemote,
-} from './dto';
-import { Todo } from 'db/models/todo.model';
+import { Todo } from './todo.model';
+import { CreateTodoDTO } from './dto/create-todo.dto';
+import { UpdateTodoDTO } from './dto/update-todo.dto';
+import { ResponceDTO } from './dto/responce.dto';
 
 @Controller('todos')
 export class TodoController {
@@ -26,9 +24,7 @@ export class TodoController {
   }
 
   @Post()
-  createTasks(
-    @Body() dto: CreateTodoReceiveRemote,
-  ): Promise<CreateTodoResponseRemote> {
+  createTasks(@Body() dto: CreateTodoDTO): Promise<ResponceDTO> {
     return this.todoService.createTask(dto);
   }
 
@@ -36,27 +32,27 @@ export class TodoController {
   // eslint-disable-next-line prettier/prettier
   deleteTask(
     @Param('id') id: number,
-  ): Promise<CreateTodoResponseRemote> {
+  ): Promise<ResponceDTO> {
     return this.todoService.deleteTask(id);
   }
 
   @Delete()
-  deleteCompleted(): Promise<CreateTodoResponseRemote> {
+  deleteCompleted(): Promise<ResponceDTO> {
     return this.todoService.deleteAllCheckedTasks();
   }
 
   @Put(':id')
   update(
     @Param('id') id: number,
-    @Body() dto: UpdateStatusTodoReceiveRemote,
-  ): Promise<CreateTodoResponseRemote> {
+    @Body() dto: UpdateTodoDTO,
+  ): Promise<ResponceDTO> {
     return this.todoService.updateStatusById(id, dto);
   }
 
   @Put()
   updateStatusForAll(
     @Query('isChecked') isChecked: boolean,
-  ): Promise<CreateTodoResponseRemote> {
+  ): Promise<ResponceDTO> {
     return this.todoService.updateStatusForAll(isChecked);
   }
 }

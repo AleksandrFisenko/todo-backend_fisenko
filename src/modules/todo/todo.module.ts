@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { Todo } from 'db/models/todo.model';
+import { Todo } from './todo.model';
 
 @Module({
   imports: [SequelizeModule.forFeature([Todo])],

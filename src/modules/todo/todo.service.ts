@@ -1,17 +1,15 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { Todo } from 'db/models/todo.model';
-import {
-  CreateTodoReceiveRemote,
-  CreateTodoResponseRemote,
-  UpdateStatusTodoReceiveRemote,
-} from './dto';
+import { Todo } from './todo.model';
 import { AppError } from 'src/common/errors';
+import { CreateTodoDTO } from './dto/create-todo.dto';
+import { UpdateTodoDTO } from './dto/update-todo.dto';
+import { ResponceDTO } from './dto/responce.dto';
 
 @Injectable()
 export class TodoService {
-  private resultOk: CreateTodoResponseRemote = { result: 'ok' };
-  private resultFailed: CreateTodoResponseRemote = { result: 'failed' };
+  private resultOk: ResponceDTO = { result: 'ok' };
+  private resultFailed: ResponceDTO = { result: 'failed' };
 
   constructor(
     @InjectModel(Todo) private readonly todoRepository: typeof Todo,
@@ -21,16 +19,14 @@ export class TodoService {
     return this.todoRepository.findAll();
   }
 
-  async createTask(
-    dto: CreateTodoReceiveRemote,
-  ): Promise<CreateTodoResponseRemote> {
+  async createTask(dto: CreateTodoDTO): Promise<ResponceDTO> {
     await this.todoRepository.create({
       text: dto.text,
     });
     return this.resultOk;
   }
 
-  async deleteTask(idParam: number): Promise<CreateTodoResponseRemote> {
+  async deleteTask(idParam: number): Promise<ResponceDTO> {
     const a = await this.todoRepository.destroy({
       where: {
         id: idParam,
@@ -40,7 +36,7 @@ export class TodoService {
     return this.resultOk;
   }
 
-  async deleteAllCheckedTasks(): Promise<CreateTodoResponseRemote> {
+  async deleteAllCheckedTasks(): Promise<ResponceDTO> {
     await this.todoRepository.destroy({
       where: {
         isChecked: true,
@@ -51,8 +47,8 @@ export class TodoService {
 
   async updateStatusById(
     idParam: number,
-    dto: UpdateStatusTodoReceiveRemote,
-  ): Promise<CreateTodoResponseRemote> {
+    dto: UpdateTodoDTO,
+  ): Promise<ResponceDTO> {
     const a = await this.todoRepository.update(
       {
         text: dto.text,
@@ -68,9 +64,7 @@ export class TodoService {
     return this.resultOk;
   }
 
-  async updateStatusForAll(
-    isCheckedParam: boolean,
-  ): Promise<CreateTodoResponseRemote> {
+  async updateStatusForAll(isCheckedParam: boolean): Promise<ResponceDTO> {
     await this.todoRepository.update(
       { isChecked: isCheckedParam },
       { where: {} },

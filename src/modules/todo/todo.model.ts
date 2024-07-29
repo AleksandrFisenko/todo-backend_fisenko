@@ -1,12 +1,4 @@
-import {
-  Table,
-  Column,
-  Model,
-  PrimaryKey,
-  DataType,
-  Default,
-  AutoIncrement,
-} from 'sequelize-typescript';
+import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
 
 @Table({
   tableName: 'Todos',
@@ -29,11 +21,11 @@ export class Todo extends Model {
     type: DataType.DATE,
     allowNull: false,
   })
-  createdAt?: any;
+  createdAt: string;
 
   @Column({
     type: DataType.DATE,
     allowNull: false,
   })
-  updatedAt?: any;
+  updatedAt: string;
 }

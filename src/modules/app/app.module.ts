@@ -1,17 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TodoModule } from '../todo/todo.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import configurations from 'src/configurations';
-import { Todo } from 'db/models/todo.model';
+import { Todo } from '../todo/todo.model';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configurations],
     }),
     SequelizeModule.forRootAsync({
       imports: [ConfigModule],
@@ -30,7 +26,7 @@ import { Todo } from 'db/models/todo.model';
     }),
     TodoModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
