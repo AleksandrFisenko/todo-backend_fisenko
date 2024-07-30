@@ -9,25 +9,26 @@ import { ResponceDTO } from './dto/responce.dto';
 @Injectable()
 export class TodoService {
   private resultOk: ResponceDTO = { result: 'ok' };
-  private resultFailed: ResponceDTO = { result: 'failed' };
 
   constructor(
     @InjectModel(Todo) private readonly todoRepository: typeof Todo,
   ) {}
 
   async getTasks(): Promise<Todo[]> {
-    return this.todoRepository.findAll();
+    return this.todoRepository.findAll({
+      order: [['id', 'ASC']],
+    });
   }
 
   async createTask(dto: CreateTodoDTO): Promise<ResponceDTO> {
     try {
-      await this.todoRepository.create({
+      const a = await this.todoRepository.create({
         text: dto.text,
       });
+      return a.dataValues;
     } catch (e) {
       throw new BadRequestException(AppError.TEXT_IS_EMPTY);
     }
-    return this.resultOk;
   }
 
   async deleteTask(idParam: number): Promise<ResponceDTO> {

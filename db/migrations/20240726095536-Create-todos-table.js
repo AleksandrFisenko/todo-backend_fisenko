@@ -1,13 +1,11 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up(queryInterface, Sequelize) {
     return queryInterface.createTable('Todos', {
       id: {
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
         type: Sequelize.INTEGER,
       },
       text: {
@@ -20,15 +18,17 @@ module.exports = {
       },
       isChecked: {
         allowNull: false,
-        default: false,
+        defaultValue: false,
         type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
+        defaultValue: Sequelize.fn('NOW'),
         type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
+        defaultValue: Sequelize.fn('NOW'),
         type: Sequelize.DATE,
       },
     });
