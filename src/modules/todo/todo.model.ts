@@ -6,10 +6,10 @@ import { Table, Column, Model, DataType, Default } from 'sequelize-typescript';
 export class Todo extends Model {
   @Column({
     allowNull: false,
-    // validate: {
-    //   notNull: true,
-    //   notEmpty: true,
-    // },
+    validate: {
+      notNull: true,
+      notEmpty: true,
+    },
   })
   text: string;
 

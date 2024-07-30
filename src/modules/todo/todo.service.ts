@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { Todo } from './todo.model';
 import { AppError } from 'src/common/errors';
@@ -20,10 +20,13 @@ export class TodoService {
   }
 
   async createTask(dto: CreateTodoDTO): Promise<ResponceDTO> {
-    const a = await this.todoRepository.create({
-      text: dto.text,
-    });
-    console.log(a);
+    try {
+      await this.todoRepository.create({
+        text: dto.text,
+      });
+    } catch (e) {
+      throw new BadRequestException(AppError.TEXT_IS_EMPTY);
+    }
     return this.resultOk;
   }
 

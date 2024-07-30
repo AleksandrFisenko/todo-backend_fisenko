@@ -20,6 +20,7 @@ module.exports = {
       },
       isChecked: {
         allowNull: false,
+        default: false,
         type: Sequelize.BOOLEAN,
       },
       createdAt: {
