@@ -39,11 +39,10 @@ export class TodoController {
   }
 
   @Put(':id')
-  update(
+  updateTaskById(
     @Param('id') id: number,
     @Body() dto: UpdateTodoDTO,
   ): Promise<ResponceDTO> {
-    console.log(dto);
     return this.todoService.updateTaskById(id, dto);
   }
 
