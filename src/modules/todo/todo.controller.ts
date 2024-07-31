@@ -6,13 +6,13 @@ import {
   Param,
   Post,
   Put,
-  Query,
 } from '@nestjs/common';
 import { TodoService } from './todo.service';
 import { Todo } from './todo.model';
 import { CreateTodoDTO } from './dto/create-todo.dto';
-import { UpdateTodoDTO } from './dto/update-todo.dto';
 import { ResponceDTO } from './dto/responce.dto';
+import { UpdateAllDTO } from './dto/update-all.dto';
+import { UpdateStatusDTO, UpdateTextDTO } from './dto/update-todo.dto';
 
 @Controller('todos')
 export class TodoController {
@@ -29,10 +29,7 @@ export class TodoController {
   }
 
   @Delete(':id')
-  // eslint-disable-next-line prettier/prettier
-  deleteTask(
-    @Param('id') id: number,
-  ): Promise<ResponceDTO> {
+  deleteTask(@Param('id') id: number): Promise<ResponceDTO> {
     return this.todoService.deleteTask(id);
   }
 
@@ -44,15 +41,13 @@ export class TodoController {
   @Put(':id')
   update(
     @Param('id') id: number,
-    @Body() dto: UpdateTodoDTO,
+    @Body() dto: UpdateTextDTO | UpdateStatusDTO,
   ): Promise<ResponceDTO> {
-    return this.todoService.updateStatusById(id, dto);
+    return this.todoService.updateTaskById(id, dto);
   }
 
   @Put()
-  updateStatusForAll(
-    @Query('isChecked') isChecked: boolean,
-  ): Promise<ResponceDTO> {
-    return this.todoService.updateStatusForAll(isChecked);
+  updateStatusForAll(@Body() dto: UpdateAllDTO): Promise<ResponceDTO> {
+    return this.todoService.updateStatusForAll(dto);
   }
 }
