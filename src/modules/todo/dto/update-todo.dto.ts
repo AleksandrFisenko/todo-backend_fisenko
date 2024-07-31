@@ -1,11 +1,11 @@
-import { IsBoolean, IsString } from 'class-validator';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 
-export class UpdateTextDTO {
+export class UpdateTodoDTO {
+  @IsOptional()
   @IsString()
   text: string;
-}
 
-export class UpdateStatusDTO {
+  @IsOptional()
   @IsBoolean()
   isChecked: boolean;
 }

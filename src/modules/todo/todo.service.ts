@@ -9,7 +9,7 @@ import { AppError } from 'src/common/errors';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { ResponceDTO } from './dto/responce.dto';
 import { UpdateAllDTO } from './dto/update-all.dto';
-import { UpdateStatusDTO, UpdateTextDTO } from './dto/update-todo.dto';
+import { UpdateTodoDTO } from './dto/update-todo.dto';
 
 @Injectable()
 export class TodoService {
@@ -55,47 +55,18 @@ export class TodoService {
     return this.resultOk;
   }
 
-  isUpdateTextDTO(dto: UpdateTextDTO | UpdateStatusDTO): dto is UpdateTextDTO {
-    return (dto as UpdateTextDTO).text !== undefined;
-  }
-
-  isUpdateStatusDTO(
-    dto: UpdateTextDTO | UpdateStatusDTO,
-  ): dto is UpdateStatusDTO {
-    return (dto as UpdateStatusDTO).isChecked !== undefined;
-  }
-
   async updateTaskById(
     idParam: number,
-    dto: UpdateTextDTO | UpdateStatusDTO,
+    dto: UpdateTodoDTO,
   ): Promise<ResponceDTO> {
-    if (this.isUpdateTextDTO(dto)) {
-      const a = await this.todoRepository.update(
-        {
-          text: dto.text,
-        },
-        {
-          where: {
-            id: idParam,
-          },
-        },
-      );
-      if (!a[0]) throw new NotFoundException(AppError.TODO_NOT_FOUND);
-    }
-    if (this.isUpdateStatusDTO(dto)) {
-      const a = await this.todoRepository.update(
-        {
-          isChecked: dto.isChecked,
-        },
-        {
-          where: {
-            id: idParam,
-          },
-        },
-      );
-      if (!a[0]) throw new NotFoundException(AppError.TODO_NOT_FOUND);
-    }
-    return this.resultOk;
+    const a = await this.todoRepository.update(dto, {
+      where: {
+        id: idParam,
+      },
+      returning: true,
+    });
+    if (!a[0]) throw new NotFoundException(AppError.TODO_NOT_FOUND);
+    return a[1][0].dataValues;
   }
 
   async updateStatusForAll(dto: UpdateAllDTO): Promise<ResponceDTO> {

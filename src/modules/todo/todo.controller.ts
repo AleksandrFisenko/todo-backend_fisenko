@@ -12,7 +12,7 @@ import { Todo } from './todo.model';
 import { CreateTodoDTO } from './dto/create-todo.dto';
 import { ResponceDTO } from './dto/responce.dto';
 import { UpdateAllDTO } from './dto/update-all.dto';
-import { UpdateStatusDTO, UpdateTextDTO } from './dto/update-todo.dto';
+import { UpdateTodoDTO } from './dto/update-todo.dto';
 
 @Controller('todos')
 export class TodoController {
@@ -41,8 +41,9 @@ export class TodoController {
   @Put(':id')
   update(
     @Param('id') id: number,
-    @Body() dto: UpdateTextDTO | UpdateStatusDTO,
+    @Body() dto: UpdateTodoDTO,
   ): Promise<ResponceDTO> {
+    console.log(dto);
     return this.todoService.updateTaskById(id, dto);
   }
 
